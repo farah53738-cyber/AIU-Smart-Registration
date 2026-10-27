@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Browse Courses - AIU</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6fb;
+        }
+        header {
+            background: #243b70;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .panel {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+        }
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #e9eef8;
+        }
+        a {
+            color: #243b70;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Browse Courses</h1>
+    <p>AIU Smart Course Registration</p>
+</header>
+
+<main>
+    <p><a href="/index.html">Back to Home</a></p>
+
+    <div class="panel">
+        <h2>Available Courses</h2>
+
+        <input id="search"
+               type="text"
+               placeholder="Search by course code or title...">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Course Code</th>
+                    <th>Course Title</th>
+                    <th>Credits</th>
+                </tr>
+            </thead>
+            <tbody id="courseTable"></tbody>
+        </table>
+
+        <p id="message"></p>
+    </div>
+</main>
+
+<script>
+    let courses = [];
+
+    async function loadCourses() {
+        try {
+            const response = await fetch('/api/courses');
+
+            if (!response.ok) {
+                throw new Error('Could not load courses');
+            }
+
+            courses = await response.json();
+            displayCourses(courses);
+        } catch (error) {
+            document.getElementById('message').textContent =
+                'Error loading courses. Please try again.';
+        }
+    }
+
+    function displayCourses(items) {
+        const table = document.getElementById('courseTable');
+        table.innerHTML = '';
+
+        items.forEach(course => {
+            const row = document.createElement('tr');
+
+            [course.code, course.title, course.credits]
+                .forEach(value => {
+                    const cell = document.createElement('td');
+                    cell.textContent = value;
+                    row.appendChild(cell);
+                });
+
+            table.appendChild(row);
+        });
+
+        document.getElementById('message').textContent =
+            items.length === 0 ? 'No courses found.' : '';
+    }
+
+    document.getElementById('search')
+        .addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+
+            const filtered = courses.filter(course =>
+                course.code.toLowerCase().includes(query) ||
+                course.title.toLowerCase().includes(query)
+            );
+
+            displayCourses(filtered);
+        });
+
+    loadCourses();
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
