@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register for Classes</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f8f5fc;
+            color: #202a3d;
+        }
+
+        header {
+            background: #765A98;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        main {
+            max-width: 850px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 18px;
+        }
+
+        input, select {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #bbb;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 20px;
+            background: #70558e;
+            color: white;
+            border: 0;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #message {
+            margin-top: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Register for Classes</h1>
+        <p>AIU Smart Course Registration</p>
+    </header>
+
+    <main>
+        <a href="/">Back to Home</a>
+
+        <div class="card">
+            <h2>Submit a Registration Request</h2>
+            <p>Enter demo student details and choose a section.</p>
+
+            <form id="registrationForm">
+                <label for="studentName">Student name</label>
+                <input id="studentName" maxlength="100" required>
+
+                <label for="studentId">Student ID</label>
+                <input id="studentId" maxlength="20" required>
+
+                <label for="section">Class section</label>
+                <select id="section" required>
+                    <option value="">Loading sections...</option>
+                </select>
+
+                <button type="submit">Submit Request</button>
+            </form>
+
+            <p id="message" aria-live="polite"></p>
+        </div>
+    </main>
+
+    <script>
+        const form = document.getElementById("registrationForm");
+        const sectionSelect = document.getElementById("section");
+        const message = document.getElementById("message");
+
+        async function loadSections() {
+            try {
+                const response = await fetch("/api/sections");
+
+                if (!response.ok) {
+                    throw new Error("Could not load sections.");
+                }
+
+                const sections = await response.json();
+                sectionSelect.innerHTML = "";
+
+                const placeholder = document.createElement("option");
+                placeholder.value = "";
+                placeholder.textContent = "Select a class";
+                sectionSelect.appendChild(placeholder);
+
+                sections.forEach(section => {
+                    const option = document.createElement("option");
+                    option.value = section.section_id;
+                    option.textContent =
+                        `${section.code} - ${section.title} | ` +
+                        `Section ${section.section_number} | ${section.schedule}`;
+                    sectionSelect.appendChild(option);
+                });
+            } catch (error) {
+                sectionSelect.innerHTML = "";
+                message.textContent =
+                    "Could not load sections.";
+            }
+        }
+
+        form.addEventListener("submit", async function (event) {
+            event.preventDefault();
+            message.textContent = "Submitting...";
+
+            try {
+                const csrfResponse = await fetch("/api/csrf");
+
+                if (!csrfResponse.ok) {
+                    throw new Error("Could not get security token.");
+                }
+
+                const csrf = await csrfResponse.json();
+
+                const response = await fetch("/api/requests", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        [csrf.headerName]: csrf.token
+                    },
+                    body: JSON.stringify({
+                        studentName: document.getElementById("studentName").value,
+                        studentId: document.getElementById("studentId").value,
+                        sectionId: Number(sectionSelect.value)
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error("Request could not be submitted.");
+                }
+
+                message.textContent =
+                    "Your request was submitted! Status: PENDING.";
+                form.reset();
+            } catch (error) {
+                message.textContent =
+                    "Something went wrong. Please try again.";
+            }
+        });
+
+        loadSections();
+    </script>
+</body>
+</html>

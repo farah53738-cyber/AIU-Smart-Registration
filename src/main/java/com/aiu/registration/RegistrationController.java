@@ -2,6 +2,7 @@ package com.aiu.registration;
 
 import java.util.List;
 import java.util.Map;
+import org.springframework.security.web.csrf.CsrfToken;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -79,4 +80,12 @@ public class RegistrationController {
         String studentId,
         Long sectionId
     ) {}
+    
+    
+    @GetMapping("/api/csrf")
+    public CsrfToken csrf(CsrfToken token) {
+        return token;
+    }
+    
+    
 }

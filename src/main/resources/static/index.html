@@ -1,50 +1,187 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AIU Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIU Registration Portal</title>
+
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background: #f4f6fb;
-            text-align: center;
             margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f8f5fc;
+            color: #202a3d;
         }
+
         header {
-            background: #243b70;
+            background: #765A98;
             color: white;
-            padding: 30px;
+            padding: 24px 8%;
         }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        header p {
+            margin: 7px 0 0;
+            color: #eee5f8;
+            font-size: 14px;
+        }
+
         main {
-            background: white;
-            margin: 60px auto;
-            padding: 40px;
-            max-width: 600px;
-            border-radius: 12px;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
-        a {
+
+        .welcome {
+            margin-bottom: 30px;
+        }
+
+        .welcome h2 {
+            margin-bottom: 8px;
+            color: #70558e;
+            font-size: 30px;
+        }
+
+        .welcome p {
+            color: #5c6677;
+            line-height: 1.5;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border: 1px solid #e9e0f1;
+            border-radius: 10px;
+            padding: 24px;
+            min-height: 190px;
+            box-shadow: 0 3px 12px rgba(25, 43, 75, 0.06);
+        }
+
+        .card h3 {
+            color: #765A98;
+            margin: 0 0 10px;
+            font-size: 19px;
+        }
+
+        .card p {
+            color: #5c6677;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 0 0 20px;
+        }
+
+        .button {
             display: inline-block;
-            background: #243b70;
+            align-self: flex-start;
+            margin-top: auto;
+            background: #765A98;
             color: white;
-            padding: 12px 20px;
-            margin: 10px;
-            border-radius: 8px;
+            padding: 10px 16px;
+            border-radius: 6px;
             text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background: #8c6bac;
+        }
+
+        .coming-soon {
+            display: inline-block;
+            align-self: flex-start;
+            margin-top: auto;
+            color: #6c7482;
+            background: #edf0f5;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        footer {
+            text-align: center;
+            color: #777;
+            font-size: 13px;
+            padding: 30px 20px;
         }
     </style>
 </head>
+
 <body>
+
     <header>
         <h1>AIU Smart Course Registration</h1>
         <p>Academic Advising System</p>
     </header>
 
     <main>
-        <h2>Welcome to AIU!</h2>
-        <a href="/courses.html">Browse Courses</a>
-        <a href="/registration">My Registration</a>
-        <a href="/advisor">Advisor Dashboard</a>
+        <div class="welcome">
+            <h2>Welcome to your registration portal</h2>
+            <p>
+                Browse courses, submit a registration request, and manage
+                your academic plans.
+            </p>
+        </div>
+
+        <div class="grid">
+
+            <div class="card">
+                <h3>Browse Courses</h3>
+                <p>Explore the available courses and their credit hours.</p>
+                <a class="button" href="/courses.html">Browse Courses</a>
+            </div>
+
+            <div class="card">
+                <h3>Register for Classes</h3>
+                <p>Choose a class section and submit a registration request.</p>
+                <a class="button" href="/registration.html">Register</a>
+            </div>
+
+            <div class="card">
+                <h3>My Registration Requests</h3>
+                <p>View your submitted requests and check their status.</p>
+                <span class="coming-soon">Coming soon</span>
+            </div>
+
+            <div class="card">
+                <h3>Advisor Dashboard</h3>
+                <p>Review student registration requests and make decisions.</p>
+                <span class="coming-soon">Coming soon</span>
+            </div>
+
+            <div class="card">
+                <h3>Plan Ahead</h3>
+                <p>Plan the courses you want to take in a future semester.</p>
+                <span class="coming-soon">Coming soon</span>
+            </div>
+
+            <div class="card">
+                <h3>Registration Readiness</h3>
+                <p>Check your registration information before choosing classes.</p>
+                <span class="coming-soon">Coming soon</span>
+            </div>
+
+        </div>
     </main>
-</body>
+
+    <footer>
+        AIU Smart Course Registration &bull; Student Prototype
+    </footer>
+
+	</body>
 </html>
