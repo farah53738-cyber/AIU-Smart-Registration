@@ -1,86 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Requests</title>
-
-	<style>
-		
-		* {
-			box-sizing: border-box;
-			
-		}
-		
-		
-		
-	  body {
-		margin:0;
-		font-family: Arial, sans-serif;
-		background:  #f8f5fc;
-		color: #202a3d;
-		
-	  }
-	  
-	  header {
-		background :#765a98;
-		color: white;
-		text-aling: center;
-		padding: 30px 20px;
-		
-	  }
-	  
-	  main {
-		max-width: 1100px;
-		margin: 35px auto;
-		padding: 0 20px;
-		
-	  }
-	  
-	  a {
-		
-		color: #684a89;
-		
-		
-	  }
-	  
-	  .card {
-		background: white;
-		border: 1px solid  #e9e0f1;
-		border-radius: 12px;
-		padding:25px;
-		margin-top: 20px;
-		
-	  }
-	  
-	  
-	  h2{
-		color: #765a98;
-		
-	  }
-	  
-	  button {
-		background: #765a98;
-		color: white;
-		border: none;
-		border-radius: 6px;
-		padding: 10px 18px;
-		cursor: pointer;
-		
-		
-	  }
-	  
-	  .table-container{
-		overflow-x: auto;
-		margin-top: 20px
-	  }
-	  
-	  
-	  th,td {
-		padding:14px;
-		text-align: left;
-		border-bottom: 1px solid #765a98;
-	  }
-	  
-	  
-	  
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Registration Requests</title><style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f8f5fc;color:#252334}header{background:#765a98;color:white;padding:28px 20px;text-align:center}main{max-width:1120px;margin:32px auto;padding:0 20px}a{color:#684a89}.card{background:white;border:1px solid #e9e0f1;border-radius:14px;padding:25px;margin-top:20px}h2{color:#765a98}button{background:#765a98;color:white;border:0;border-radius:8px;padding:12px 18px;font:inherit;cursor:pointer}button:disabled{opacity:.6;cursor:wait}.table-container{overflow-x:auto;margin-top:20px}table{width:100%;border-collapse:collapse}th,td{padding:14px;text-align:left;border-bottom:1px solid #e9e0f1}th{background:#eee7f5}.status{display:inline-block;padding:6px 10px;border-radius:6px;font-size:13px;font-weight:bold}.pending{background:#fff3cf;color:#745700}.approved{background:#e1f4e7;color:#21653b}.rejected{background:#fbe4e7;color:#982d3e}:focus-visible{outline:3px solid #b88cde;outline-offset:3px}
+</style></head><body><header><h1>Registration Requests</h1><p>AIU Smart Course Registration</p></header><main><a href="/">Back to Home</a><section class="card"><h2>Submitted Requests</h2><p>Demo view of all students’ submitted requests.</p><button id="refreshButton" type="button">Refresh Requests</button><p id="message" role="status" aria-live="polite"></p><div class="table-container"><table aria-label="Submitted registration requests"><thead><tr><th scope="col">Request</th><th scope="col">Student</th><th scope="col">Student ID</th><th scope="col">Course</th><th scope="col">Section</th><th scope="col">Schedule</th><th scope="col">Status</th></tr></thead><tbody id="requestRows"></tbody></table></div></section></main><script>
+const rows=document.getElementById('requestRows');
+const message=document.getElementById('message');
+const refreshButton=document.getElementById('refreshButton');
+async function loadRequests(){
+ refreshButton.disabled=true;message.textContent='Loading requests...';rows.replaceChildren();
+ try{
+  const response=await fetch('/api/requests',{headers:{Accept:'application/json'},cache:'no-store'});
+  if(!response.ok||response.redirected)throw new Error('Could not load requests');
+  const requests=await response.json();
+  if(!Array.isArray(requests))throw new Error('Unexpected response');
+  requests.forEach(request=>{
+   const row=document.createElement('tr');
+   const values=[request.request_id,request.student_name,request.student_id,[request.code,request.title].filter(Boolean).join(' - '),request.section_number,request.schedule];
+   values.forEach(value=>{const cell=document.createElement('td');cell.textContent=value??'';row.appendChild(cell);});
+   const cell=document.createElement('td');const badge=document.createElement('span');const status=String(request.status??'');badge.classList.add('status');
+   if(['PENDING','APPROVED','REJECTED'].includes(status))badge.classList.add(status.toLowerCase());
+   badge.textContent=status;cell.appendChild(badge);row.appendChild(cell);rows.appendChild(row);
+  });
+  message.textContent=requests.length?`${requests.length} request(s) found.`:'No registration requests yet.';
+ }catch(error){rows.replaceChildren();message.textContent='Could not load requests. Check that the app is running and you are logged in.';}
+ finally{refreshButton.disabled=false;}
+}
+refreshButton.addEventListener('click',loadRequests);loadRequests();
+</script></body></html>
