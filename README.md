@@ -5,6 +5,9 @@ This is our course registration prototype for CSC 340. We used Java Spring Boot 
 
 So far, users can browse courses, choose a section, submit a registration request, and view saved requests.
 
+GitHub repository:
+https://github.com/farah53738-cyber/AIU-Smart-Registration
+
 ## Software needed
 
 - JDK 17 or a compatible newer version
