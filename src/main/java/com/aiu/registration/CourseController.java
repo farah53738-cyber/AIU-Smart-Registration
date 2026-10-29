@@ -20,8 +20,7 @@ public class CourseController {
     @GetMapping("/api/courses")
     public List<Map<String, Object>> getCourses() {
         return jdbcTemplate.queryForList(
-            "SELECT course_id, code, title, credits " +
-            "FROM Course WHERE active = TRUE ORDER BY code"
+        		"SELECT * FROM course WHERE active = TRUE ORDER BY code"
         );
     }
 }

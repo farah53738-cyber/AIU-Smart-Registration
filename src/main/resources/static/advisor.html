@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AIU Advisor Dashboard</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f8f6fb;
+            color: #252334;
+        }
+
+        header {
+            background: linear-gradient(115deg, #664881, #876ca7);
+            color: white;
+        }
+
+        .header-inner {
+            max-width: 1160px;
+            margin: auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-mark {
+            background: white;
+            color: #765a98;
+            border-radius: 12px;
+            padding: 10px 15px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .brand small {
+            display: block;
+            margin-top: 4px;
+            color: #eee7f5;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        button {
+            font: inherit;
+            cursor: pointer;
+        }
+
+        #signOutButton {
+            border: 1px solid #ffffff50;
+            border-radius: 8px;
+            background: #ffffff20;
+            color: white;
+            padding: 10px 16px;
+        }
+
+        main {
+            max-width: 1160px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        .welcome {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .pill {
+            display: inline-block;
+            background: #eee6f5;
+            color: #684985;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        h1 {
+            max-width: 650px;
+            font-size: clamp(28px, 4vw, 40px);
+            margin: 16px 0 12px;
+        }
+
+        .welcome p {
+            color: #6e6b79;
+            line-height: 1.6;
+            max-width: 650px;
+        }
+
+        .summary {
+            background: white;
+            border: 1px solid #e8e1ee;
+            border-radius: 14px;
+            padding: 22px;
+            min-width: 180px;
+        }
+
+        .summary strong {
+            display: block;
+            color: #765a98;
+            font-size: 32px;
+            margin-bottom: 6px;
+        }
+
+        .summary span {
+            color: #6e6b79;
+            font-size: 13px;
+        }
+
+        .panel {
+            background: white;
+            border: 1px solid #e8e1ee;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .eyebrow {
+            color: #765a98;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        h2 {
+            margin: 7px 0;
+            font-size: 23px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            min-height: 220px;
+            padding: 22px;
+            border: 1px solid #e8e1ee;
+            border-radius: 13px;
+        }
+
+        .icon {
+            display: grid;
+            place-items: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 11px;
+            font-size: 22px;
+            background: #eee6f5;
+            color: #765a98;
+        }
+
+        .blue { background: #e7f0f8; color: #4c739a; }
+        .green { background: #e6f3ec; color: #4e8067; }
+        .amber { background: #fff0de; color: #9a6b33; }
+        .rose { background: #f8e9ed; color: #9b5d6b; }
+        .teal { background: #e1f2f1; color: #367c7b; }
+
+        .card h3 {
+            margin: 17px 0 8px;
+            font-size: 17px;
+        }
+
+        .card p {
+            color: #6e6b79;
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0 0 20px;
+        }
+
+        .card a,
+        .card button {
+            align-self: flex-start;
+            margin-top: auto;
+            padding: 0;
+            border: 0;
+            background: none;
+            color: #765a98;
+            font-size: 13px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .coming-soon {
+            color: #888;
+            font-size: 12px;
+            margin-top: auto;
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .action-button {
+            border: 0;
+            border-radius: 7px;
+            padding: 10px 14px;
+            background: #765a98;
+            color: white;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: wait;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        th,
+        td {
+            padding: 14px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e8e1ee;
+        }
+
+        th {
+            background: #f2edf7;
+            white-space: nowrap;
+        }
+
+        td button {
+            margin: 3px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 9px;
+            border-radius: 7px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .pending { background: #fff3cf; color: #745700; }
+        .approved { background: #e1f4e7; color: #21653b; }
+        .rejected { background: #fbe4e7; color: #982d3e; }
+
+        #message {
+            color: #6e6b79;
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #888;
+            font-size: 12px;
+            background: white;
+            border-top: 1px solid #e8e1ee;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        :focus-visible {
+            outline: 3px solid #b89bd0;
+            outline-offset: 4px;
+        }
+
+        @media (max-width: 850px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 550px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .panel {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-inner">
+            <div class="brand">
+                <div class="brand-mark">A</div>
+                <div>
+                    <strong>AIU</strong>
+                    <small>Smart Course Registration</small>
+                </div>
+            </div>
+
+            <nav aria-label="Main navigation">
+                <a href="/advisor.html">Home</a>
+                <a href="#requests">Requests</a>
+                <a href="/courses.html">Courses</a>
+                <span>Academic Advisor</span>
+                <button id="signOutButton" type="button">
+                    Sign out
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="welcome">
+            <div>
+                <span class="pill">Advisor workspace · Fall 2026</span>
+                <h1>Welcome to your advising dashboard</h1>
+                <p>
+                    Review student registration requests, record decisions,
+                    and keep track of your advising work.
+                </p>
+            </div>
+
+            <div class="summary">
+                <strong id="pendingCount">—</strong>
+                <span>Requests awaiting review</span>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">Advisor services</span>
+                    <h2>Manage your advising work</h2>
+                </div>
+            </div>
+
+            <div class="grid">
+                <article class="card">
+                    <div class="icon" aria-hidden="true">☷</div>
+                    <h3>Pending Requests</h3>
+                    <p>
+                        Review registration requests waiting for your decision.
+                    </p>
+                    <button type="button" data-filter="pending">
+                        Review requests →
+                    </button>
+                </article>
+
+                <article class="card">
+                    <div class="icon blue" aria-hidden="true">♙</div>
+                    <h3>My Advisees</h3>
+                    <p>
+                        View assigned students and their academic progress.
+                    </p>
+                    <span class="coming-soon">Coming soon</span>
+                </article>
+
+                <article class="card">
+                    <div class="icon green" aria-hidden="true">▦</div>
+                    <h3>Student Schedules</h3>
+                    <p>
+                        Check timetable conflicts and proposed schedules.
+                    </p>
+                    <span class="coming-soon">Coming soon</span>
+                </article>
+
+                <article class="card">
+                    <div class="icon amber" aria-hidden="true">▤</div>
+                    <h3>Course Catalog</h3>
+                    <p>
+                        Browse active courses and registration information.
+                    </p>
+                    <a href="/courses.html">Browse catalog →</a>
+                </article>
+
+                <article class="card">
+                    <div class="icon rose" aria-hidden="true">✎</div>
+                    <h3>Advising Notes</h3>
+                    <p>
+                        Record guidance and follow-up actions for students.
+                    </p>
+                    <span class="coming-soon">Coming soon</span>
+                </article>
+
+                <article class="card">
+                    <div class="icon teal" aria-hidden="true">✓</div>
+                    <h3>Decision History</h3>
+                    <p>
+                        Review approved and rejected registration requests.
+                    </p>
+                    <button type="button" data-filter="history">
+                        View history →
+                    </button>
+                </article>
+            </div>
+        </section>
+
+        <section class="panel" id="requests">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">Registration management</span>
+                    <h2 id="tableTitle">All registration requests</h2>
+                </div>
+
+                <div class="filters">
+                    <button class="action-button"
+                            type="button" data-filter="all">
+                        All
+                    </button>
+                    <button class="action-button"
+                            type="button" data-filter="pending">
+                        Pending
+                    </button>
+                    <button class="action-button"
+                            type="button" data-filter="history">
+                        Decision history
+                    </button>
+                    <button class="action-button"
+                            type="button" id="refreshButton">
+                        Refresh
+                    </button>
+                </div>
+            </div>
+
+            <p id="message" role="status" aria-live="polite">
+                Loading requests…
+            </p>
+
+            <div class="table-container">
+                <table aria-label="Student registration requests">
+                    <thead>
+                        <tr>
+                            <th scope="col">Request</th>
+                            <th scope="col">Student</th>
+                            <th scope="col">Student ID</th>
+                            <th scope="col">Course</th>
+                            <th scope="col">Section</th>
+                            <th scope="col">Schedule</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Decision</th>
+                        </tr>
+                    </thead>
+                    <tbody id="requestRows"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        AIU Smart Course Registration · Advisor Prototype · Fall 2026
+    </footer>
+
+    <script>
+        "use strict";
+
+        let requests = [];
+        let filter = "all";
+
+        const rows = document.getElementById("requestRows");
+        const message = document.getElementById("message");
+        const refreshButton = document.getElementById("refreshButton");
+
+        async function api(url, options = {}) {
+            const response = await fetch(url, {
+                ...options,
+                credentials: "same-origin",
+                cache: "no-store",
+                headers: {
+                    Accept: "application/json",
+                    ...(options.headers || {})
+                }
+            });
+
+            if (response.redirected || response.status === 401) {
+                throw new Error("Your session ended. Please sign in again.");
+            }
+
+            const data = await response.json().catch(() => ({}));
+
+            if (!response.ok) {
+                throw new Error(
+                    data.message ||
+                    (response.status === 403
+                        ? "An advisor account is required."
+                        : "Could not complete the request.")
+                );
+            }
+
+            return data;
+        }
+
+        function renderRequests() {
+            rows.replaceChildren();
+
+            const pending = requests.filter(
+                request => request.status === "PENDING"
+            ).length;
+
+            document.getElementById("pendingCount").textContent = pending;
+
+            document.getElementById("tableTitle").textContent =
+                filter === "pending"
+                    ? "Pending registration requests"
+                    : filter === "history"
+                        ? "Decision history"
+                        : "All registration requests";
+
+            const visible = requests.filter(request => {
+                if (filter === "pending") {
+                    return request.status === "PENDING";
+                }
+
+                if (filter === "history") {
+                    return ["APPROVED", "REJECTED"].includes(request.status);
+                }
+
+                return true;
+            });
+
+            visible.forEach(request => {
+                const row = document.createElement("tr");
+
+                const values = [
+                    request.request_id,
+                    request.student_name,
+                    request.student_id,
+                    `${request.code} - ${request.title}`,
+                    request.section_number,
+                    request.schedule
+                ];
+
+                values.forEach(value => {
+                    const cell = document.createElement("td");
+                    cell.textContent = value ?? "";
+                    row.appendChild(cell);
+                });
+
+                const statusCell = document.createElement("td");
+                const badge = document.createElement("span");
+
+                badge.classList.add("status");
+                badge.textContent = request.status;
+
+                if (["PENDING", "APPROVED", "REJECTED"]
+                        .includes(request.status)) {
+                    badge.classList.add(request.status.toLowerCase());
+                }
+
+                statusCell.appendChild(badge);
+                row.appendChild(statusCell);
+
+                const actions = document.createElement("td");
+
+                if (request.status === "PENDING") {
+                    ["APPROVED", "REJECTED"].forEach(status => {
+                        const button = document.createElement("button");
+
+                        button.type = "button";
+                        button.className = "action-button";
+                        button.textContent =
+                            status === "APPROVED" ? "Approve" : "Reject";
+
+                        button.addEventListener("click", async () => {
+                            actions.querySelectorAll("button")
+                                .forEach(item => item.disabled = true);
+
+                            message.textContent = "Saving decision…";
+
+                            try {
+                                const csrf = await api("/api/csrf");
+
+                                await api(
+                                    `/api/requests/${request.request_id}/status`,
+                                    {
+                                        method: "PATCH",
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                            [csrf.headerName]: csrf.token
+                                        },
+                                        body: JSON.stringify({ status })
+                                    }
+                                );
+
+                                await loadRequests();
+                            } catch (error) {
+                                message.textContent = error.message;
+
+                                actions.querySelectorAll("button")
+                                    .forEach(item => item.disabled = false);
+                            }
+                        });
+
+                        actions.appendChild(button);
+                    });
+                } else {
+                    actions.textContent = "Decision recorded";
+                }
+
+                row.appendChild(actions);
+                rows.appendChild(row);
+            });
+
+            message.textContent = visible.length
+                ? `${visible.length} request(s) found.`
+                : "No requests in this view.";
+        }
+
+        async function loadRequests() {
+            refreshButton.disabled = true;
+            message.textContent = "Loading requests…";
+
+            try {
+                const data = await api("/api/requests");
+
+                if (!Array.isArray(data)) {
+                    throw new Error("Unexpected response from the server.");
+                }
+
+                requests = data;
+                renderRequests();
+            } catch (error) {
+                rows.replaceChildren();
+                document.getElementById("pendingCount").textContent = "—";
+                message.textContent = error.message;
+            } finally {
+                refreshButton.disabled = false;
+            }
+        }
+
+        document.querySelectorAll("[data-filter]").forEach(button => {
+            button.addEventListener("click", () => {
+                filter = button.dataset.filter;
+                renderRequests();
+
+                document.getElementById("requests").scrollIntoView({
+                    behavior: "smooth"
+                });
+            });
+        });
+
+        refreshButton.addEventListener("click", loadRequests);
+
+        document.getElementById("signOutButton")
+            .addEventListener("click", () => {
+                window.location.href = "/login";
+            });
+
+        loadRequests();
+    </script>
+</body>
+</html>

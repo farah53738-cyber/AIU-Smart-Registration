@@ -21,8 +21,8 @@ public class SectionController {
         return jdbcTemplate.queryForList(
             "SELECT s.section_id, c.code, c.title, c.credits, " +
             "s.section_number, s.instructor, s.schedule, s.room, s.capacity " +
-            "FROM Section s " +
-            "JOIN Course c ON s.course_id = c.course_id " +
+            "FROM section s " +
+            "JOIN course c ON s.course_id = c.course_id " +
             "WHERE c.active = TRUE " +
             "ORDER BY c.code"
         );

@@ -1,0 +1,104 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f8f5fc;
+    color: #252334;
+}
+
+header {
+    padding: 30px 20px;
+    background: #765a98;
+    color: white;
+    text-align: center;
+}
+
+main {
+    max-width: 1120px;
+    margin: 32px auto;
+    padding: 0 20px;
+}
+
+a {
+    color: #684a89;
+    margin-right: 16px;
+}
+
+.card {
+    margin-top: 20px;
+    padding: 25px;
+    border: 1px solid #e9e0f1;
+    border-radius: 14px;
+    background: white;
+}
+
+h2 {
+    color: #765a98;
+}
+
+button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 7px;
+    background: #765a98;
+    color: white;
+    font: inherit;
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.table-container {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid #e9e0f1;
+}
+
+th {
+    background: #eee7f5;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.pending {
+    background: #fff3cf;
+    color: #745700;
+}
+
+.approved {
+    background: #e1f4e7;
+    color: #21653b;
+}
+
+.rejected {
+    background: #fbe4e7;
+    color: #982d3e;
+}
+
+:focus-visible {
+    outline: 3px solid #b88cde;
+    outline-offset: 3px;
+}
