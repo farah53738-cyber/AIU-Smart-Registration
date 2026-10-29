@@ -1,4 +1,4 @@
-U Smart Course Registration
+AIU Smart Course Registration
 D4 – Working Prototype / Release 0.5
 This is our course registration and academic advising prototype for CSC 340. We built it using Java Spring Boot, MySQL, HTML, CSS, and JavaScript.
 
