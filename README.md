@@ -23,8 +23,8 @@ How to run the project
    - Website port: 8082
 6. In the Eclipse run configuration for AiuRegistrationApplication, set these environment variables:
    - DB_PASSWORD — your MySQL password
-   - STUDENT_LOGIN_PASSWORD — password for the demo student accounts
-   - ADVISOR_LOGIN_PASSWORD — password for the demo advisor account
+   - STUDENT_LOGIN_PASSWORD — aaaa
+   - ADVISOR_LOGIN_PASSWORD — aaaa
 7. Run AiuRegistrationApplication.java as a Spring Boot application.
 8. When the console shows the application has started, open http://localhost:8082/login.
 Username	Role	Password
