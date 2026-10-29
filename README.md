@@ -27,12 +27,10 @@ How to run the project
    - ADVISOR_LOGIN_PASSWORD — password for the demo advisor account
 7. Run AiuRegistrationApplication.java as a Spring Boot application.
 8. When the console shows the application has started, open http://localhost:8082/login.
-Do not put real passwords in the README or commit them to GitHub.
-Demo accounts
 Username	Role	Password
-student1	Student	Value of STUDENT_LOGIN_PASSWORD
-student2	Student	Value of STUDENT_LOGIN_PASSWORD
-advisor	Advisor	Value of ADVISOR_LOGIN_PASSWORD
+student1	Student	Value aaaa
+student2	Student	Value aaaa
+advisor	Advisor	Value aaaa
 
 
 After a successful login, students are directed to the Student Dashboard and the advisor is directed to the Advisor Dashboard.
