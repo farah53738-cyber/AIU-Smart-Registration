@@ -1,125 +1,89 @@
-# AIU Smart Course Registration
-## D4 – Working Prototype / Release 0.5
-
-This is our course registration prototype for CSC 340. We used Java Spring Boot for the backend, MySQL for the database, and HTML, CSS, and JavaScript for the website.
-
-So far, users can browse courses, choose a section, submit a registration request, and view saved requests.
-
-GitHub repository:
-https://github.com/farah53738-cyber/AIU-Smart-Registration
-
-## Software needed
-
-- JDK 17 or a compatible newer version
-- MySQL Server 8.0 and MySQL Workbench
-- Eclipse with Maven support
-- A web browser
-
-## How to run the project
-
-1. Download and extract the project, or clone the GitHub repository.
-2. Open MySQL Workbench and connect to your local MySQL server.
-3. Go to File → Open SQL Script and open `database_setup.sql`.
-4. Run the script to create the database and load the sample data.
-
-**Important:** This script replaces the existing project tables and their data. Use it for the initial setup, not every time you run the website.
-
-5. In Eclipse, select File → Import → Maven → Existing Maven Projects.
-6. Choose the project folder containing `pom.xml` and finish the import.
-7. Open `src/main/resources/application.properties` and check these settings:
-
-   - Database: `aiu_registration`
-   - MySQL port: `3306`
-   - Database username: `root`
-   - Website port: `8080`
-
-   Change the database username or connection settings if your computer uses different ones.
-
-8. Open Run → Run Configurations and select the configuration for `AiuRegistrationApplication`. If it is not listed, run the Java class once to create it.
-9. In the Environment tab, add:
-
-   - `DB_PASSWORD`: your local MySQL password
-   - `APP_LOGIN_PASSWORD`: a password you choose for the website login
-
-   Leave the password placeholders in `application.properties`. Actual passwords should not be uploaded to GitHub.
-
-10. Run `AiuRegistrationApplication.java`.
-11. Once the Console shows that the application has started, open:
-
-    http://localhost:8080/
-
-12. Log in with username `admin` and the password you set for `APP_LOGIN_PASSWORD`.
-
-Keep the application running while using the website.
-
-### Running through Command Prompt
-
-You can also run the project from its main folder using:
-
+AIU Smart Course Registration
+D4 – Working Prototype / Release 0.5
+This is our course registration and academic advising prototype for CSC 340. We built it using Java Spring Boot, MySQL, HTML, CSS, and JavaScript.
+The goal is to make course registration easier for students and let advisors review registration requests. This is Release 0.5, so the main registration process is implemented, but some planned features are still unfinished.
+GitHub: https://github.com/farah53738-cyber/AIU-Smart-Registration
+Software needed
+Java JDK compatible with the project's `pom.xml`
+MySQL Server and MySQL Workbench
+Eclipse with Maven support (or another Java IDE)
+A web browser
+How to run the project
+Download the project or clone the GitHub repository.
+Start MySQL and open MySQL Workbench.
+Open `database_setup.sql` and run it to create the `aiu_registration` database and load sample data.
+Important: The setup script may drop and recreate existing tables. Only use it for initial setup or when you are okay with replacing the existing data.
+In Eclipse, choose File → Import → Maven → Existing Maven Projects and select the folder containing `pom.xml`.
+Open `src/main/resources/application.properties` and check the database connection settings. The current setup uses:
+Database: `aiu_registration`
+MySQL host and port: `localhost:3306`
+Database user: `root`
+Website port: `8082`
+In the Eclipse run configuration for `AiuRegistrationApplication`, set these environment variables:
+`DB_PASSWORD` — your MySQL password
+`STUDENT_LOGIN_PASSWORD` — password for the demo student accounts
+`ADVISOR_LOGIN_PASSWORD` — password for the demo advisor account
+Run `AiuRegistrationApplication.java` as a Spring Boot application.
+When the console shows the application has started, open http://localhost:8082/login.
+Do not put real passwords in the README or commit them to GitHub.
+Demo accounts
+Username	Role	Password
+`student1`	Student	Value of `STUDENT_LOGIN_PASSWORD`
+`student2`	Student	Value of `STUDENT_LOGIN_PASSWORD`
+`advisor`	Advisor	Value of `ADVISOR_LOGIN_PASSWORD`
+After a successful login, students are directed to the Student Dashboard and the advisor is directed to the Advisor Dashboard.
+Running from Command Prompt
+From the project folder, set the three environment variables first and then run:
 ```bat
 mvnw.cmd spring-boot:run
 ```
-
-Set `DB_PASSWORD` and `APP_LOGIN_PASSWORD` in the same Command Prompt session first. Internet access is needed to download Maven dependencies on the first run.
-
-## Website pages
-
-| Page | Address |
-|---|---|
-| Homepage | `/` |
-| Browse Courses | `/courses.html` |
-| Register for Classes | `/registration.html` |
-| Registration Requests | `/requests.html` |
-
-Open the pages through the running website so they can communicate with the backend.
-
-## What works
-
-- Login using a shared demo account
-- Navigation between the working pages
-- Browsing and searching courses
-- Selecting a section and submitting a request
-- Checking student details and whether the section exists
-- Saving requests in MySQL with a `PENDING` status
-- Viewing and refreshing saved requests
-- Using parameterized SQL for inserts and a CSRF token when submitting
-
-The database includes eight sample courses, eight sections, and one sample registration request.
-
-## What is not finished
-
-- Separate student and advisor accounts
-- Showing only the logged-in student's requests
-- Advisor approval and rejection
-- Updating enrollment and available seats
-- Planning future semesters
-- Checking prerequisites, holds, and timetable conflicts
-
-## Current limitations
-
-The `admin` account is only a shared demo login. It does not have a working admin dashboard.
-
-The requests page currently displays all submitted requests. Requests stay `PENDING` because the advisor decision feature is not implemented yet.
-
-The course sections, instructors, rooms, and schedules are sample data. The database is a simplified version of the planned system. Duplicate requests and full sections are not blocked yet.
-
-We have run the project on Windows. The exported table names are lowercase, while some Java queries use capital letters. These names may need to be matched before running on a case-sensitive MySQL installation.
-
-## Demo steps
-
-1. Log in.
-2. Browse courses and try the search.
-3. Open the registration form.
-4. Enter demo student details and select a section.
-5. Submit the request.
-6. Open View Requests and check that it appears as `PENDING`.
-7. Refresh the list.
-
-Registration submission and request display have been demonstrated. Before submission, we still need to check installation on another computer and confirm that requests remain after restarting the application.
-
-## Common problems
-
-- **Port 8080 is already in use:** Stop the earlier running application. You can also change `server.port` to `8081` and open http://localhost:8081/.
-- **Database connection fails:** Check that MySQL is running and that the database settings and password are correct.
-- **Login fails:** Check the `APP_LOGIN_PASSWORD` value in the run configuration.
-- **Old page design appears:** Save the files, refresh the Eclipse project, restart the application, and press Ctrl + F5 in the browser.
+Maven may need internet access the first time it downloads dependencies.
+Website pages
+Page	Address
+Login	`/login`
+Student Dashboard	`/index.html`
+Advisor Dashboard	`/advisor.html`
+Browse Courses	`/courses.html`
+Register for Classes	`/registration.html`
+My Registration Requests	`/requests.html`
+Features implemented in Release 0.5
+Separate demo Student and Advisor accounts with role-based access
+Custom login page and dashboard redirects based on the account role
+Student and Advisor dashboards with navigation
+Course browsing and searching
+Viewing available course sections
+Students can submit registration requests
+Requests are saved in MySQL with an initial `PENDING` status
+Students can view requests linked to their demo student account
+Advisors can view registration requests and approve or reject pending requests
+Students can see the updated request status
+Checks for invalid sections and duplicate pending/approved requests for the same section
+CSRF protection for requests that change data
+Features not finished yet
+Automatic enrollment and seat-count updates after approval
+Full prerequisite, academic hold, and schedule-conflict checks
+Semester planning and registration readiness features
+Complete advisor tools such as advisee management, schedules, and advising notes
+Real university account integration and production-ready user management
+Current limitations
+This is a prototype using demo accounts and sample course information, not a live university registration system. Student information is mapped to the demo accounts in the application.
+Some dashboard cards are marked Coming soon and are not functional yet. Advisor approval changes a request's status, but does not automatically enroll the student or update available seats.
+The database setup script is intended for initial setup and can overwrite existing project data. The project has mainly been developed for a local Windows and MySQL environment; other environments may need configuration changes.
+The current sign-out links should be tested carefully. Redirecting to `/login` alone does not end a Spring Security session; a proper logout request is needed to switch accounts reliably.
+Demo steps
+Start MySQL and the Spring Boot application.
+Log in as `student1` and open the Student Dashboard.
+Browse courses and choose a section.
+Submit a registration request.
+Open My Registration Requests and check that the new request appears as `PENDING`.
+Log out completely and log in as `advisor`.
+Open the Advisor Dashboard, find the pending request, and approve or reject it.
+Log out, return as `student1`, and check the updated request status.
+Repeat with another request if you want to demonstrate both approval and rejection.
+These steps describe the intended demo workflow. Test the complete flow on the submitted version before recording your final demonstration.
+Common problems
+Website does not open: Check that Spring Boot started successfully and use port `8082`, not `8080`.
+Database connection error: Check that MySQL is running, `aiu_registration` exists, and `DB_PASSWORD` is correct.
+Login fails: Check `STUDENT_LOGIN_PASSWORD` or `ADVISOR_LOGIN_PASSWORD` in your run configuration.
+Wrong account/dashboard appears: Log out completely, restart the application if needed, and sign in again.
+Old files appear: Make sure you are running the same project folder that you uploaded to GitHub. Save changes, restart the application, and refresh the browser.
