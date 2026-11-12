@@ -6,30 +6,24 @@ import org.springframework.web.server.ResponseStatusException;
 
 public final class DemoAccounts {
 
-    private DemoAccounts() {
-    }
+  private DemoAccounts() {}
 
-    public record Student(String studentId, String studentName) {
-    }
+  public record Student(String studentId, String studentName) {}
 
-    public static Student student(Authentication authentication) {
+  public static Student student(Authentication authentication) {
 
-        return switch (authentication.getName()) {
-            case "student1" -> new Student("1", "Sarah");
-            case "student2" -> new Student("2", "Demo Student");
+    return switch (authentication.getName()) {
+      case "student1" -> new Student("1", "Sarah");
+      case "student2" -> new Student("2", "Laila");
 
-            default -> throw new ResponseStatusException(
-                HttpStatus.FORBIDDEN,
-                "Student account required."
-            );
-        };
-    }
+      default ->
+          throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Student account required.");
+    };
+  }
 
-    public static boolean isAdvisor(Authentication authentication) {
+  public static boolean isAdvisor(Authentication authentication) {
 
-        return authentication.getAuthorities().stream()
-            .anyMatch(authority ->
-                authority.getAuthority().equals("ROLE_ADVISOR")
-            );
-    }
+    return authentication.getAuthorities().stream()
+        .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADVISOR"));
+  }
 }

@@ -27,61 +27,33 @@ public class LoginController {
                 <meta charset="UTF-8">
                 <meta name="viewport"
                       content="width=device-width, initial-scale=1">
-                <title>AIU Login</title>
+                <title>Sign in | AIU Course Registration System</title>
 
                 <style>
-                    body {
-                        font-family: Arial, sans-serif;
-                        background: #f8f5fc;
-                        padding: 40px 20px;
-                    }
-
-                    form {
-                        max-width: 350px;
-                        margin: 40px auto;
-                        background: white;
-                        padding: 30px;
-                        border-radius: 14px;
-                    }
-
-                    h1 {
-                        color: #765a98;
-                    }
-
-                    input, button {
-                        box-sizing: border-box;
-                        width: 100%;
-                        padding: 12px;
-                        margin: 8px 0 16px;
-                    }
-
-                    button {
-                        background: #765a98;
-                        color: white;
-                        border: 0;
-                        border-radius: 7px;
-                        cursor: pointer;
-                    }
-
-                    button:hover {
-                        background: #634b83;
-                    }
+                :root{font-family:"Segoe UI",Arial,sans-serif;color:#2b2340;background:#f7f5fa}
+                *{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:25px;background:radial-gradient(circle at 20% 10%,#eee4fa,transparent 38%),#f7f5fa}
+                form{width:min(100%,410px);background:#fff;padding:38px;border:1px solid #eae4f1;border-radius:20px;box-shadow:0 25px 60px rgba(64,43,90,.09)}
+                .logo{height:51px;width:51px;display:grid;place-items:center;background:linear-gradient(140deg,#594078,#8c6ba7);color:#fff;border-radius:14px;font-size:19px;font-weight:800;margin-bottom:24px}
+                h1{color:#332747;font-size:26px;letter-spacing:-.03em;margin:0 0 8px}p{color:#756d80;font-size:13px;line-height:1.6;margin:0 0 25px}
+                label{display:block;font-size:12px;font-weight:650;color:#4d425d;margin:15px 0 7px}input{width:100%;padding:12px 13px;border:1px solid #dcd5e5;border-radius:9px;font:inherit;font-size:14px}input:focus-visible,button:focus-visible{outline:3px solid #b28ad5;outline-offset:2px}
+                button{width:100%;background:#694e88;color:#fff;border:0;border-radius:9px;padding:13px;cursor:pointer;font-family:inherit;font-size:13px;font-weight:700;margin-top:22px}button:hover{background:#563a79}
+                .help{color:#80758b;text-align:center;margin-top:18px;font-size:11px}.feedback{padding:12px;border-radius:8px;font-size:12px;margin:12px 0}.error{background:#fff0f3;color:#9e345b}.ok{background:#eaf5f0;color:#347257}
                 </style>
             </head>
 
             <body>
                 <form method="post" action="/login">
-                    <h1>AIU Sign In</h1>
+                    <div class="logo" aria-hidden="true">AIU</div><h1>AIU Course Registration System</h1><p>Sign in with your university account to access registration and academic advising.</p><div id="feedback" role="status" aria-live="polite"></div>
 
-                    <p>Use student1, student2, or advisor.</p>
+                  
 
-                    <label for="username">Username</label>
+                    <label for="username">University ID</label>
                     <input
                         id="username"
                         name="username"
                         type="text"
                         value=""
-                        autocomplete="off"
+                        autocomplete="username"
                         required
                     >
 
@@ -98,8 +70,14 @@ public class LoginController {
                            name="CSRF_NAME"
                            value="CSRF_VALUE">
 
-                    <button type="submit">Sign in</button>
+                    <button type="submit">Sign in to your portal</button><div class="help">AIU Course Registration System · Academic services</div>
                 </form>
+                <script>
+                const params = new URLSearchParams(location.search);
+                const box = document.getElementById('feedback');
+                if (params.has('error')) {box.className='feedback error';box.textContent='Those details could not be verified. Check your university ID and password.';}
+                else if (params.has('logout')) {box.className='feedback ok';box.textContent='You have signed out successfully.';}
+                </script>
             </body>
             </html>
             """

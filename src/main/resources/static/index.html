@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AIU Registration Portal</title><style>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AIU Course Registration System</title><style>
 
 
 
@@ -1609,6 +1609,9 @@ footer {
   cursor: pointer;
 }
 #signOutButton:hover { background: rgba(255,255,255,0.22); }
+
+.student-notification-link{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:rgba(255,255,255,.12);color:white;border:1px solid rgba(255,255,255,.28);border-radius:10px;padding:10px 12px;text-decoration:none;font:600 12px "Segoe UI",Arial,sans-serif;min-height:38px}.student-notification-link:hover{background:rgba(255,255,255,.2)}.student-notification-link:focus-visible{outline:3px solid white;outline-offset:3px}
+.portal-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.portal-card{min-height:190px}.student-support{display:flex;justify-content:center;gap:28px;padding:24px;font-size:14px}.student-support a{color:#654b86}.welcome-section{grid-template-columns:1fr}.portal-section{padding:26px}@media(max-width:620px){.portal-grid{grid-template-columns:1fr}.portal-section{padding:18px}}
 </style>
 
   </head>
@@ -1633,7 +1636,7 @@ footer {
 
                           <strong>AIU</strong>
 
-                          <span>Smart Course Registration</span>
+                          <span>Course Registration System</span>
 
                       </div>
 
@@ -1642,7 +1645,7 @@ footer {
 
 
                   <div class="student-header-actions">
-                      <span class="demo-label">Student prototype</span>
+                      <a class="student-notification-link" href="/portal.html#inbox" title="View notifications" aria-label="View notifications">&#128276; Notifications</a>
                       <button id="signOutButton" type="button">Sign out</button>
                   </div>
 
@@ -1660,13 +1663,13 @@ footer {
 
                       <span class="term-pill">
 
-                          Academic advising · Student prototype
+                          Student portal
 
                       </span>
 
 
 
-                      <h1>Welcome to your registration portal</h1>
+                      <h1 id="studentWelcome">Welcome to your registration portal</h1>
 
 
 
@@ -1698,280 +1701,18 @@ footer {
 
 
 
-                      <p>AIU Smart Course Registration</p>
+                      <p>AIU Course Registration System</p>
 
                   </div>
 
 
 
-                  <div class="portal-grid">
-
-                      <article class="portal-card">
-
-                          <div class="card-top">
-
-                              <span class="feature-icon violet">
-
-                                  <svg aria-hidden="true" class="icon"
-
-                                       width="22" height="22"
-
-                                       viewBox="0 0 24 24" fill="none">
-
-                                      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/>
-
-                                  </svg>
-
-                              </span>
-
-                          </div>
-
-
-
-                          <h3>Browse Courses</h3>
-
-                          <p>Explore the available courses and their credit hours.</p>
-
-
-
-                          <a href="/courses.html">
-
-                              Browse courses
-
-                              <svg aria-hidden="true" class="icon"
-
-                                   width="22" height="22"
-
-                                   viewBox="0 0 24 24" fill="none">
-
-                                  <path d="m9 18 6-6-6-6"/>
-
-                              </svg>
-
-                          </a>
-
-                      </article>
-
-
-
-                      <article class="portal-card">
-
-                          <div class="card-top">
-
-                              <span class="feature-icon blue">
-
-                                  <svg aria-hidden="true" class="icon"
-
-                                       width="22" height="22"
-
-                                       viewBox="0 0 24 24" fill="none">
-
-                                      <rect x="3" y="5" width="18" height="16" rx="2"/>
-
-                                      <path d="M16 3v4M8 3v4M3 10h18"/>
-
-                                  </svg>
-
-                              </span>
-
-                          </div>
-
-
-
-                          <h3>Register for Classes</h3>
-
-                          <p>Choose a class section and submit a registration request.</p>
-
-
-
-                          <a href="/registration.html">
-
-                              Start registration
-
-                              <svg aria-hidden="true" class="icon"
-
-                                   width="22" height="22"
-
-                                   viewBox="0 0 24 24" fill="none">
-
-                                  <path d="m9 18 6-6-6-6"/>
-
-                              </svg>
-
-                          </a>
-
-                      </article>
-
-
-
-                      <article class="portal-card">
-
-                          <div class="card-top">
-
-                              <span class="feature-icon green">
-
-                                  <svg aria-hidden="true" class="icon"
-
-                                       width="22" height="22"
-
-                                       viewBox="0 0 24 24" fill="none">
-
-                                      <rect x="5" y="4" width="14" height="18" rx="2"/>
-
-                                      <path d="M9 4V2h6v2M9 12h6M9 16h4"/>
-
-                                  </svg>
-
-                              </span>
-
-                          </div>
-
-
-
-                          <h3>My Registration Requests</h3>
-
-                          <p>
-
-                              View saved requests and their status.
-
-                              This demo view shows all students’ requests.
-
-                          </p>
-
-
-
-                          <a href="/requests.html">
-
-                              View requests
-
-                              <svg aria-hidden="true" class="icon"
-
-                                   width="22" height="22"
-
-                                   viewBox="0 0 24 24" fill="none">
-
-                                  <path d="m9 18 6-6-6-6"/>
-
-                              </svg>
-
-                          </a>
-
-                      </article>
-
-
-
-                      <article class="portal-card">
-
-                          <div class="card-top">
-
-                              <span class="feature-icon amber">
-
-                                  <svg aria-hidden="true" class="icon"
-
-                                       width="22" height="22"
-
-                                       viewBox="0 0 24 24" fill="none">
-
-                                      <circle cx="12" cy="8" r="4"/>
-
-                                      <path d="M5 21a7 7 0 0 1 14 0"/>
-
-                                  </svg>
-
-                              </span>
-
-                          </div>
-
-
-
-                   
-
-
-                          <h3>Plan Ahead</h3>
-
-                          <p>Plan courses for a future semester.</p>
-
-                          <span class="coming-soon">Coming soon</span>
-
-                      </article>
-
-
-
-                      <article class="portal-card">
-
-                          <div class="card-top">
-
-                              <span class="feature-icon teal">
-
-                                 <svg aria-hidden="true" class="icon"
-
-                                       width="22" height="22"
-
-                                       viewBox="0 0 24 24" fill="none">
-
-                                      <circle cx="12" cy="12" r="9"/>
-
-                                      <path d="m8 12 2.5 2.5L16 9"/>
-
-                                  </svg>
-
-                              </span>
-
-                          </div>
-
-
-
-                          <h3>Registration Readiness</h3>
-
-                          <p>Check prerequisites and registration information.</p>
-
-                          <span class="coming-soon">Coming soon</span>
-
-                      </article>
-
-                  </div>
-
+<div class="portal-grid"><article class="portal-card"><div class="card-top"><span class="feature-icon violet" aria-hidden="true">▤</span></div><h3>Browse Courses</h3><p>View course details, instructors, class times, and available seats.</p><a href="/portal.html#catalog">Browse courses →</a></article><article class="portal-card"><div class="card-top"><span class="feature-icon blue" aria-hidden="true">＋</span></div><h3>Register for Classes</h3><p>Enter class numbers and submit your selected classes for advisor approval.</p><a href="/portal.html#register">Start registration →</a></article><article class="portal-card"><div class="card-top"><span class="feature-icon green" aria-hidden="true">▦</span></div><h3>My Schedule</h3><p>View your confirmed classes and weekly timetable.</p><a href="/portal.html#schedule">View schedule →</a></article><article class="portal-card"><div class="card-top"><span class="feature-icon amber" aria-hidden="true">✓</span></div><h3>My Requests</h3><p>Check whether your registration is pending, approved, or rejected.</p><a href="/portal.html#requests">View requests →</a></article></div>
               </section>
 
 
 
-              <section class="info-strip">
-
-                  <div class="info-icon">
-
-                      <svg aria-hidden="true" class="icon"
-
-                           width="22" height="22"
-
-                           viewBox="0 0 24 24" fill="none">
-
-                          <circle cx="12" cy="8" r="4"/>
-
-                          <path d="M5 21a7 7 0 0 1 14 0"/>
-
-                      </svg>
-
-                  </div>
-
-
-
-                  <div>
-
-                      <span>Your academic plans</span>
-
-                      <h2>Start with the course catalog.</h2>
-
-                      <p>
-
-                          Choose a section on the registration page,
-
-                          then check your saved request.
-
-                      </p>
-
-                  </div>
-
-              </section>
+<nav class="student-support" aria-label="Other student services"><a href="/portal.html#waitlists">My waitlists</a><a href="/portal.html#advisor">My advisor</a></nav>
 
           </main>
 
@@ -1985,7 +1726,7 @@ footer {
 
                       <strong>AIU</strong>
 
-                      <span>Smart Course Registration · Student Prototype</span>
+                      <span>Course Registration System</span>
 
                   </div>
 
@@ -1996,8 +1737,22 @@ footer {
       </div>
 
   <script>
-  document.getElementById("signOutButton").addEventListener("click", () => {
-    window.location.href = "/login";
+  fetch('/api/me', {headers:{Accept:'application/json'}})
+    .then(r => r.ok ? r.json() : null)
+    .then(user => { if (!user) { location.replace('/login'); return; } if (!user.roles?.includes('STUDENT')) { location.replace('/portal.html'); return; } if (user && typeof user.displayName === 'string') {
+      const firstName = user.displayName.replace(/^demo\s+/i, "").trim().split(/\s+/)[0];
+      if (firstName && !/^(demo|student)$/i.test(firstName))
+        document.getElementById('studentWelcome').textContent = `Welcome back, ${firstName}.`;
+    }}).catch(() => {});
+  document.getElementById("signOutButton").addEventListener("click", async () => {
+    const response = await fetch('/api/csrf');
+    if (!response.ok) { window.location.href = '/login'; return; }
+    const token = await response.json();
+    const form = document.createElement('form');
+    form.method = 'POST'; form.action = '/logout';
+    const input = document.createElement('input');
+    input.type = 'hidden'; input.name = token.parameterName; input.value = token.token;
+    form.append(input); document.body.append(form); form.submit();
   });
 </script>
 </body>

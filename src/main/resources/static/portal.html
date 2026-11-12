@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>AIU Course Registration System</title>
+    <link rel="stylesheet" href="/beta.css" />
+    <script src="/beta.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <aside>
+      <a class="brand" href="/portal.html#home"
+        ><b class="mark">AIU</b
+        ><span
+          >Course Registration System<small
+            >American International University</small
+          ></span
+        ></a
+      >
+      <p class="navlabel">YOUR WORKSPACE</p>
+      <nav id="nav" aria-label="Main navigation"></nav>
+      
+    </aside>
+    <div class="workspace">
+      <header>
+        <div>
+          <span class="eyebrow">AIU · ACADEMIC SERVICES</span>
+          <h1 id="title">Your registration, made simpler.</h1>
+        </div>
+        <div class="account">
+          <a href="#inbox" class="notification-bell" id="notificationBell" aria-label="Open notifications" title="Notifications"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><span id="notificationCount" hidden></span></a>
+          <span id="account"></span
+          ><button id="logout" class="secondary">Sign out</button>
+        </div>
+      </header>
+      <main id="main-content" tabindex="-1">
+        <div id="message" role="status" aria-live="polite" hidden></div>
+        <div id="content"><p>Loading your workspace…</p></div>
+      </main>
+      <footer>AIU Course Registration System · Academic Services</footer>
+    </div>
+    <dialog id="details" aria-label="Section details">
+      <button id="closeDialog" class="secondary">Close details</button>
+      <div id="detailBody"></div>
+    </dialog>
+  </body>
+</html>

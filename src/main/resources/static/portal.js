@@ -35,7 +35,17 @@ window.portal = {
         });
     },
 
-    signOut() {
-        window.location.href = "/logout";
+    async signOut() {
+        const csrf = await this.request("/api/csrf");
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "/logout";
+        const field = document.createElement("input");
+        field.type = "hidden";
+        field.name = csrf.parameterName;
+        field.value = csrf.token;
+        form.append(field);
+        document.body.append(form);
+        form.submit();
     }
 };

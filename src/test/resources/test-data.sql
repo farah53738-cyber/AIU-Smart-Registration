@@ -1,0 +1,9 @@
+
+DELETE FROM AuditLog;DELETE FROM Notification;DELETE FROM OutboxEvent;DELETE FROM WaitlistEntry;DELETE FROM Enrollment;DELETE FROM RequestItem;DELETE FROM registrationrequest;DELETE FROM PlanItem;DELETE FROM Plan;DELETE FROM CompletedCourse;DELETE FROM CoursePrerequisite;DELETE FROM SectionMeeting;DELETE FROM section;DELETE FROM course;DELETE FROM StudentProfile;DELETE FROM UserRole;DELETE FROM `User`;DELETE FROM `Term`;
+INSERT INTO `User`(user_id,university_id,name,password_hash) VALUES(1,'student1','Sarah','PENDING_BCRYPT_HASH'),(2,'student2','Demo Student','PENDING_BCRYPT_HASH'),(3,'advisor','Advisor','PENDING_BCRYPT_HASH'),(4,'registrar','Registrar','PENDING_BCRYPT_HASH'),(5,'admin','Admin','PENDING_BCRYPT_HASH'),(6,'instructor_ahmed','Dr. Ahmed','PENDING_BCRYPT_HASH'),(7,'advisor2','Other advisor','PENDING_BCRYPT_HASH'),(8,'instructor_sara','Dr. Sara','PENDING_BCRYPT_HASH');
+INSERT INTO UserRole VALUES(1,'STUDENT'),(2,'STUDENT'),(3,'ADVISOR'),(4,'REGISTRAR'),(5,'ADMIN'),(6,'INSTRUCTOR'),(7,'ADVISOR'),(8,'INSTRUCTOR');
+INSERT INTO StudentProfile VALUES(1,3),(2,3);
+INSERT INTO `Term` VALUES(1,'Test semester','2026-01-01','2030-12-31','2020-01-01 00:00:00','2030-12-31 23:59:59');
+INSERT INTO course VALUES(1,'CSC101','Introduction',3,TRUE),(2,'CSC230','Programming',3,TRUE),(3,'CSC340','Software Engineering',3,TRUE),(4,'CSC470','Databases',3,TRUE);
+INSERT INTO section VALUES(1,1,1,6,'01','Dr. Ahmed','SUN 09:00–10:00','A1',2,TRUE),(2,2,1,6,'01','Dr. Ahmed','SUN 10:00–11:00','A2',2,TRUE),(3,3,1,8,'01','Dr. Sara','SUN 09:30–10:30','A3',2,TRUE),(4,4,1,8,'01','Dr. Sara','MON 12:00–13:00','A4',1,TRUE);
+INSERT INTO SectionMeeting(section_id,day_of_week,start_time,end_time,start_date,end_date,room) VALUES(1,7,'09:00','10:00','2026-01-01','2030-12-31','A1'),(2,7,'10:00','11:00','2026-01-01','2030-12-31','A2'),(3,7,'09:30','10:30','2026-01-01','2030-12-31','A3'),(4,1,'12:00','13:00','2026-01-01','2030-12-31','A4');
