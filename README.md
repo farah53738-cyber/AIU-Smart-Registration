@@ -82,10 +82,3 @@ Common problems
 - Wrong user/dashboard: Use Sign out to end the Spring Security session, then log in again.
 - Old files appear: Check that Eclipse runs the latest project, restart, and refresh with Ctrl + F5.
 
-Username	           Role	    Password
-student1	          Student	      aaaa
-student2        	 Student	      aaaa
-advisor	          Advisor	      aaaa
-instructor_ahmed	 Instructor  	aaaa
-registrar	      Registrar	   aaaa
-admin	          Administrator	   aaaa
