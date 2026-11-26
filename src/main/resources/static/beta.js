@@ -507,19 +507,61 @@ async function advisor() {
 let advisorStatus = "PENDING", advisorTerm = "", advisorSearch = "";
 async function advisorRequests() {
   currentRequests=await api("/api/requests");
-  $("content").innerHTML=`<section class="card"><h2>Registration requests</h2><p>Open a request to review the student's selected classes before making a decision.</p><div class="row"><label>Status<select id="advisorStatus">${[["PENDING","Pending review"],["APPROVED","Approved"],["REJECTED","Rejected"],["WITHDRAWN","Withdrawn"],["","All requests"]].map(([v,t])=>`<option value="${v}" ${v===advisorStatus?"selected":""}>${t}</option>`).join("")}</select></label><label>Academic term<select id="advisorTerm"><option value="">All terms</option>${terms.map(t=>`<option value="${t.term_id}" ${String(t.term_id)===advisorTerm?"selected":""}>${esc(t.name)}</option>`).join("")}</select></label><label>Student<input id="advisorSearch" type="search" value="${esc(advisorSearch)}" placeholder="Name or university ID"></label></div><div id="advisorRequestRows"></div></section>`;
+  $("content").innerHTML=`<section class="card"><h2>Registration requests</h2><p>Open a request to review the student's selected classes before making a decision.</p><div class="row"><label>Status<select id="advisorStatus">${[["PENDING","Pending review"],["APPROVED","Approved"],["REJECTED","Rejected"],["WITHDRAWN","Withdrawn"],["","All requests"]].map(([v,t])=>`<option value="${v}" ${v===advisorStatus?"selected":""}>${t}</option>`).join("")}</select></label><label>Academic term<select id="advisorTerm"><option value="">All terms</option>${terms.map(t=>`<option value="${t.term_id}" ${String(t.term_id)===advisorTerm?"selected":""}>${esc(t.name)}</option>`).join("")}</select></label><label>Student or request<input id="advisorSearch" type="search" value="${esc(advisorSearch)}" placeholder="Name, university ID or #request ID"></label>
+</div><div id="advisorRequestRows"></div></section>`;
   $("advisorStatus").onchange=()=>{advisorStatus=$("advisorStatus").value;drawAdvisorRequests();};
   $("advisorTerm").onchange=()=>{advisorTerm=$("advisorTerm").value;drawAdvisorRequests();};
   $("advisorSearch").oninput=()=>{advisorSearch=$("advisorSearch").value;drawAdvisorRequests();};
   drawAdvisorRequests();
 }
 function filteredAdvisorRequests() {
-  const q=advisorSearch.trim().toLowerCase();
-  return currentRequests.filter(r=>(!advisorStatus||r.status===advisorStatus)&&(!advisorTerm||String(r.term_id)===advisorTerm)&&(!q||`${r.student_name} ${r.student_id}`.toLowerCase().includes(q)));
+  const query = advisorSearch.trim().toLowerCase();
+
+  return currentRequests.filter(request => {
+    if (advisorStatus && request.status !== advisorStatus) return false;
+    if (advisorTerm && String(request.term_id) !== advisorTerm) return false;
+
+    if (query.startsWith("#")) {
+      return query === "#" + String(request.request_id);
+    }
+
+    const student = `${request.student_name} ${request.student_id}`;
+    return student.toLowerCase().includes(query);
+  });
 }
+
 function drawAdvisorRequests() {
-  const rows=filteredAdvisorRequests();
-  $("advisorRequestRows").innerHTML=rows.length?table(["Student","Term","Classes","Status",""],rows.map(r=>[`${esc(r.student_name)}<p>${esc(r.student_id)}</p>`,esc(terms.find(t=>Number(t.term_id)===Number(r.term_id))?.name||"—"),esc((r.items||[]).map(i=>i.code).join(", ")),badge(r.status),btn(r.status==="PENDING"?"Review":"View","reviewRequest",r.request_id,true)])):'<p class="empty">No requests match these filters.</p>';
+  const requests = filteredAdvisorRequests();
+  const container = $("advisorRequestRows");
+
+  if (requests.length === 0) {
+    container.innerHTML = '<p class="empty">No requests match these filters.</p>';
+    return;
+  }
+
+  const rows = requests.map(request => {
+    const term = terms.find(t => Number(t.term_id) === Number(request.term_id));
+    const classes = (request.items || []).map(item => item.code).join(", ");
+
+    return [
+      "#" + esc(request.request_id),
+      `${esc(request.student_name)}<p>${esc(request.student_id)}</p>`,
+      esc(term?.name || "—"),
+      esc(classes),
+      badge(request.status),
+      btn(
+        request.status === "PENDING" ? "Review" : "View",
+        "reviewRequest",
+        request.request_id,
+        true
+      )
+    ];
+  });
+
+  container.innerHTML = table(
+    ["Request", "Student", "Term", "Classes", "Status", ""],
+    rows
+  );
 }
 function reviewRequest(id) {
   const r=currentRequests.find(r=>Number(r.request_id)===id);
